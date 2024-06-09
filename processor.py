@@ -22,6 +22,7 @@ async def process_loop_search():
 async def process_search():
     tweets = get_tweet_by_search(prompt)
     for tweet in tweets:
+        print("Process tweet ", tweet.id)
         if not is_tweet_exist(tweet):
             await process_tweet(tweet)
         else:
