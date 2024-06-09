@@ -1,0 +1,14 @@
+version: "3.3"
+
+services:
+  vstup-twitter-bot:
+    container_name: vstup-twitter-bot
+    build:
+      dockerfile: Dockerfile
+      context: .
+    restart: always
+    environment:
+      - CHAT_ID
+      - TELEGRAM_TOKEN
+      - TWITTER_PASSWORD
+      - TWITTER_USERNAME
