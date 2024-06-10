@@ -1,4 +1,3 @@
-import logging
 import os
 
 from tweety import Twitter, filters
@@ -33,5 +32,6 @@ def get_tweet_by_search(keyword: str):
                 tweets.extend(tweet.tweets)
             else:
                 tweets.append(tweet)
+    tweets.reverse()
     return tweets
 

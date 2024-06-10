@@ -1,9 +1,10 @@
 import os
+from datetime import timedelta
 
 from aiogram import Bot
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.types import InlineKeyboardButton
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 TOKEN = os.getenv("TELEGRAM_TOKEN")
@@ -32,4 +33,5 @@ async def send_tweet(tweet):
 
 
 def format_date(date):
-    return f"{date.day} {months_uk[date.month - 1]} {date.year} о {date.hour}:{date.minute}"
+    kyiv_time = date + timedelta(hours=3)
+    return f"{kyiv_time.day} {months_uk[kyiv_time.month - 1]} {kyiv_time.year} о {kyiv_time.hour}:{kyiv_time.minute:02}"

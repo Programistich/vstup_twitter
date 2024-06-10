@@ -8,7 +8,7 @@ import telegram
 from twitter import get_tweet_by_search
 
 connector = sqlite3.connect("storage.db")
-prompt = "(нмт AND вступ) OR нмт OR наукма OR могилянка OR кма OR NAUKMA"
+prompt = "(нмт AND вступ) OR (нмт AND іспит) OR нмт OR наукма OR могилянка OR кма OR NAUKMA OR єві OR євфф"
 
 
 async def process_loop_search():
@@ -16,13 +16,14 @@ async def process_loop_search():
     while True:
         print("Searching...")
         await process_search()
-        time.sleep(60 * 10)  # 10 minutes
+        print("Sleeping...")
+        time.sleep(60 * 5)  # 5 minutes
 
 
 async def process_search():
     tweets = get_tweet_by_search(prompt)
-    for tweet in tweets:
-        print("Process tweet ", tweet.id)
+    for index, tweet in enumerate(tweets):
+        print(f"Processing tweet {index + 1} of {len(tweets)} by id {tweet.id}")
         if not is_tweet_exist(tweet):
             await process_tweet(tweet)
         else:
@@ -30,13 +31,13 @@ async def process_search():
 
 
 async def process_tweet(tweet: Tweet):
-    print("Tweet:", tweet)
     try:
         await telegram.send_tweet(tweet)
         save_tweet(tweet)
+        await asyncio.sleep(3)
     except Exception as e:
         print("Error:", e)
-    await asyncio.sleep(10)  # 5 seconds
+        await asyncio.sleep(5)
     print("----------------")
 
 
