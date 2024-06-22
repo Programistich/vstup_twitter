@@ -28,7 +28,7 @@ def get_tweet_by_search(keyword: str):
     tweets = []
     search_tweet = []
     try:
-        search_tweet = twitter.iter_search(keyword=keyword, pages=1, filter_="Latest"):
+        search_tweet = twitter.iter_search(keyword=keyword, pages=1, filter_="Latest")
     except Exception as e:
         print("Error occurred while searching: %s", e)
 
