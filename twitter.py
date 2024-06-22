@@ -26,7 +26,13 @@ def login():
 
 def get_tweet_by_search(keyword: str):
     tweets = []
-    for search in twitter.iter_search(keyword=keyword, pages=1, filter_="Latest"):
+    search_tweet = []
+    try:
+        search_tweet = twitter.iter_search(keyword=keyword, pages=1, filter_="Latest"):
+    except Exception as e:
+        print("Error occurred while searching: %s", e)
+
+    for search in search_tweet:
         for tweet in search[1]:
             if isinstance(tweet, SelfThread):
                 tweets.extend(tweet.tweets)
@@ -34,4 +40,3 @@ def get_tweet_by_search(keyword: str):
                 tweets.append(tweet)
     tweets.reverse()
     return tweets
-

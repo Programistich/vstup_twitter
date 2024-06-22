@@ -1,6 +1,7 @@
 import asyncio
 import time
 import sqlite3
+import random
 
 from tweety.types import Tweet
 
@@ -8,8 +9,10 @@ import telegram
 from twitter import get_tweet_by_search
 
 connector = sqlite3.connect("storage.db")
-prompt = "(нмт AND вступ) OR (нмт AND іспит) OR нмт OR наукма OR могилянка OR кма OR NAUKMA OR єві OR євфф"
 
+prompt_list = ["(нмт AND вступ)", "(нмт AND іспит)", "нмт", "наукма", "могилянка", "кма", "NAUKMA", "єві", "євфф"]
+random.shuffle(prompt_list)
+prompt = " OR ".join(prompt_list)
 
 async def process_loop_search():
     print("Start searching")
@@ -17,7 +20,7 @@ async def process_loop_search():
         print("Searching...")
         await process_search()
         print("Sleeping...")
-        time.sleep(60 * 5)  # 5 minutes
+        time.sleep(60 * 15)  # 15 minutes
 
 
 async def process_search():
